@@ -1,10 +1,13 @@
 {
   "name": "programarivm/nonce-shield",
-  "description": "This is a simple, framework-agnostic library that protects your PHP web apps from CSRF attacks.",
+  "description": "This is a simple, framework-agnostic library inspired by WordPress that helps you protect your PHP web apps from CSRF attacks.",
   "type": "library",
   "license": "GPL-3.0-only",
   "keywords": [
       "php",
+      "nonce",
+      "wordpress",
+      "wp",
       "library",
       "csrf",
       "protection",

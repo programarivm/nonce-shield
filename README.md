@@ -1,4 +1,4 @@
-## CSRF Shield
+## Nonce Shield
 
 [![Build Status](https://travis-ci.org/programarivm/nonce-shield.svg?branch=master)](https://travis-ci.org/programarivm/nonce-shield)
 [![Packagist](https://img.shields.io/packagist/dt/programarivm/nonce-shield.svg)](https://packagist.org/packages/programarivm/nonce-shield)
@@ -6,108 +6,6 @@
 
 ![CSRF Shield](/resources/nonce-shield.jpg?raw=true)
 
-This is a simple, framework-agnostic library that helps you protect your PHP web apps from CSRF attacks.  CSRF Shield is built on the idea of **sending tokens with the POST method only**; otherwise the server will respond with a `405` status code (`Method Not Allowed`).
+This is a simple, framework-agnostic library inspired by WordPress that helps you protect your PHP web apps from CSRF attacks.
 
-> **Remember**: It is encouraged not to disclose CSRF tokens in URLs. For further information on disclosing tokens in URLs, please visit OWASP's <a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet#Disclosure_of_Token_in_URL">Cross-Site Request Forgery CSRF Prevention Cheat Sheet</a>.
-
-### 1. Install
-
-Via composer:
-
-    $ composer require programarivm/nonce-shield
-
-### 2. Instantiation
-
-Make sure that a PHP session is been started already and then use a `NonceShield\Nonce` object as it is shown below.
-
-To create/store a new CSRF token into the session:
-
-```php
-<?php
-use NonceShield\Nonce;
-
-session_start();
-// ...
-(new Nonce)->startToken();
-```
-
-To protect a PHP code snippet that responds to a POST request:
-
-```php
-<?php
-use NonceShield\Nonce;
-
-session_start();
-// ...
-(new Nonce)->validateToken();
-```
-
-### 3. `NonceShield\Nonce` Methods
-
-#### 3.1. `startToken()`
-
-Creates and stores a new CSRF token into the session.
-
-```php
-(new Nonce)->startToken();
-```
-
-> **Side Note**: The name of the CSRF session variable is `_csrf_shield_token` by default.
-
-#### 3.2. `getToken()`
-
-Gets the current CSRF token from the session.
-
-```php
-(new Nonce)->getToken();
-```
-
-#### 3.3. `validateToken()`
-
-Validates the incoming CSRF token against the current session's token.
-
-```php
-(new Nonce)->validateToken();
-```
-
-The token can be read either through `$_POST['_csrf_shield_token']`, or through `$_SERVER['HTTP_X_CSRF_TOKEN']` if an AJAX call is made with an `X-CSRF-Token` header.
-
-If the token is not valid the server will send a `403` response (`Forbidden`).
-
-#### 3.4. `htmlInput()`
-
-HTML input tag with the embedded value of the current CSRF token.
-
-```php
-(new Nonce)->htmlInput();
-```
-
-Here is an example:
-
-    <input type="hidden" name="_csrf_shield_token" id="_csrf_shield_token" value="5b18469018952acd17039f62f310426ceac16d3f" />
-
-### 4. Hello World
-
-Run the `auto-processing-form.php` example with PHP's built-in server to see `NonceShield\Nonce` in action:
-
-    cd examples
-    php -S localhost:8000
-
-And then visit:
-
-    http://localhost:8000/auto-processing-form.php
-
-### 5. License
-
-The GNU General Public License.
-
-### 6. Contributions
-
-Would you help make this library better? Contributions are welcome.
-
-- Feel free to send a pull request
-- Drop an email at info@programarivm.com with the subject "CSRF Shield Contributions"
-- Leave me a comment on [Twitter](https://twitter.com/programarivm)
-- Say hello on [Google+](https://plus.google.com/+Programarivm)
-
-Many thanks.
+> Currently on development. Please be patient.
