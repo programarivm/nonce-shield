@@ -1,7 +1,7 @@
 <?php
 namespace CsrfShield;
 
-use CsrfShield\CsrfSession;
+use CsrfShield\NonceSession;
 use CsrfShield\Html;
 use CsrfShield\HttpResponse;
 
@@ -19,7 +19,7 @@ class Nonce
     /**
      * The CSRF session.
      *
-     * @var CsrfSession
+     * @var NonceSession
      */
     private $csrfSession;
 
@@ -35,7 +35,7 @@ class Nonce
      */
     public function __construct()
     {
-        $this->csrfSession = new CsrfSession;
+        $this->csrfSession = new NonceSession;
         $this->html = new Html($this->csrfSession);
     }
 

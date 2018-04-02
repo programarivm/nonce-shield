@@ -1,7 +1,7 @@
 <?php
 namespace CsrfShield;
 
-use CsrfShield\CsrfSession;
+use CsrfShield\NonceSession;
 use CsrfShield\Html;
 
 /**

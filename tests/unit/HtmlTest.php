@@ -1,7 +1,7 @@
 <?php
 namespace CsrfShield\Tests\Unit;
 
-use CsrfShield\CsrfSession;
+use CsrfShield\NonceSession;
 use CsrfShield\Exception\EmptyCsrfTokenException;
 use CsrfShield\Exception\UnstartedSessionException;
 use CsrfShield\Html;
@@ -15,7 +15,7 @@ class HtmlTest extends TestCase
     public function input()
     {
         session_start();
-        $csrfSession = (new CsrfSession)->startToken();
+        $csrfSession = (new NonceSession)->startToken();
         $htmlInput = (new Html($csrfSession))->input();
         $token = $csrfSession->getToken();
         session_destroy();
@@ -35,7 +35,7 @@ class HtmlTest extends TestCase
         session_start();
 
         try {
-            $csrfSession = new CsrfSession;
+            $csrfSession = new NonceSession;
             $htmlInput = (new Html($csrfSession))->input();
         } catch (EmptyCsrfTokenException $e) {
             $caught = true;

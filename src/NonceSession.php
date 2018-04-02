@@ -5,7 +5,7 @@ use CsrfShield\Exception\EmptyCsrfTokenException;
 use CsrfShield\Exception\UnstartedSessionException;
 
 /**
- * CsrfSession class.
+ * NonceSession class.
  *
  * Handles the CSRF token in the PHP session.
  *
@@ -13,7 +13,7 @@ use CsrfShield\Exception\UnstartedSessionException;
  * @link https://programarivm.com
  * @license GPL
  */
-class CsrfSession
+class NonceSession
 {
     const NAME = '_csrf_shield_token';
 
@@ -30,7 +30,7 @@ class CsrfSession
     /**
      * Creates and stores a new CSRF token into the session.
      *
-     * @return CsrfSession
+     * @return NonceSession
      */
     public function startToken() {
         if (empty(session_id())) {

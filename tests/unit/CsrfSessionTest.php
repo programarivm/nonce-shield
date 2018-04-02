@@ -1,12 +1,12 @@
 <?php
 namespace CsrfShield\Tests\Unit;
 
-use CsrfShield\CsrfSession;
+use CsrfShield\NonceSession;
 use CsrfShield\Exception\EmptyCsrfTokenException;
 use CsrfShield\Exception\UnstartedSessionException;
 use PHPUnit\Framework\TestCase;
 
-class CsrfSessionTest extends TestCase
+class NonceSessionTest extends TestCase
 {
     /**
      * @test
@@ -14,10 +14,10 @@ class CsrfSessionTest extends TestCase
     public function instantiate()
     {
         session_start();
-        $csrfSession = new CsrfSession;
+        $csrfSession = new NonceSession;
         session_destroy();
 
-        $this->assertInstanceOf(CsrfSession::class, $csrfSession);
+        $this->assertInstanceOf(NonceSession::class, $csrfSession);
     }
 
     /**
@@ -27,7 +27,7 @@ class CsrfSessionTest extends TestCase
     {
         $this->expectException(UnstartedSessionException::class);
 
-        $csrfSession = new CsrfSession;
+        $csrfSession = new NonceSession;
     }
 
     /**
@@ -36,7 +36,7 @@ class CsrfSessionTest extends TestCase
     public function get_token()
     {
         session_start();
-        $token = (new CsrfSession)->startToken()->getToken();
+        $token = (new NonceSession)->startToken()->getToken();
         session_destroy();
 
         $this->assertTrue(is_string($token));
@@ -49,7 +49,7 @@ class CsrfSessionTest extends TestCase
     public function get_token_no_chaining_methods()
     {
         session_start();
-        $csrfSession = (new CsrfSession)->startToken();
+        $csrfSession = (new NonceSession)->startToken();
         $token = $csrfSession->getToken();
         session_destroy();
 
@@ -64,7 +64,7 @@ class CsrfSessionTest extends TestCase
     {
         $this->expectException(UnstartedSessionException::class);
 
-        $token = (new CsrfSession)->startToken()->getToken();
+        $token = (new NonceSession)->startToken()->getToken();
     }
 
     /**
@@ -77,7 +77,7 @@ class CsrfSessionTest extends TestCase
         session_start();
 
         try {
-            $token = (new CsrfSession)->getToken();
+            $token = (new NonceSession)->getToken();
         } catch (EmptyCsrfTokenException $e) {
             $caught = true;
             $this->assertTrue(true);
@@ -96,7 +96,7 @@ class CsrfSessionTest extends TestCase
     public function is_valid()
     {
         session_start();
-        $csrfSession = (new CsrfSession)->startToken();
+        $csrfSession = (new NonceSession)->startToken();
         $token = $csrfSession->getToken();
         $isValid = $csrfSession->validateToken($token);
         session_destroy();
@@ -110,7 +110,7 @@ class CsrfSessionTest extends TestCase
     public function is_invalid()
     {
         session_start();
-        $csrfSession = (new CsrfSession)->startToken();
+        $csrfSession = (new NonceSession)->startToken();
         $token = 'foo';
         $isValid = $csrfSession->validateToken($token);
         session_destroy();
@@ -128,7 +128,7 @@ class CsrfSessionTest extends TestCase
         session_start();
 
         try {
-            $isValid = (new CsrfSession)->validateToken('foo');
+            $isValid = (new NonceSession)->validateToken('foo');
         } catch (EmptyCsrfTokenException $e) {
             $caught = true;
             $this->assertTrue(true);

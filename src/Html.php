@@ -1,7 +1,7 @@
 <?php
 namespace CsrfShield;
 
-use CsrfShield\CsrfSession;
+use CsrfShield\NonceSession;
 use CsrfShield\Exception\EmptyCsrfTokenException;
 use CsrfShield\Exception\UnstartedSessionException;
 
@@ -19,7 +19,7 @@ class Html
     /**
      * The CSRF session.
      *
-     * @var CsrfSession
+     * @var NonceSession
      */
     private $csrfSession;
 
