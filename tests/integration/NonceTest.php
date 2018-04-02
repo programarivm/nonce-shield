@@ -121,7 +121,7 @@ class NonceTest extends TestCase
      */
     public function ajax_get_token_200()
     {
-        $this->response = $this->http->request('GET', 'ajax/get-token.php');
+        $this->response = $this->http->request('GET', 'get-token.php');
 
         $json = json_decode(
             $this->response->getBody()->getContents(),
@@ -138,7 +138,7 @@ class NonceTest extends TestCase
      */
     public function ajax_post_token_200()
     {
-        $this->response = $this->http->request('GET', 'ajax/get-token.php');
+        $this->response = $this->http->request('GET', 'get-token.php');
 
         $json = json_decode(
             $this->response->getBody()->getContents(),
@@ -147,7 +147,7 @@ class NonceTest extends TestCase
 
         $this->response = $this->http->request(
             'POST',
-            'ajax/post-token.php', [
+            'validate-token.php', [
                 'headers' => [
                     'X-CSRF-Token' => $json['_nonce_shield_token']
                 ]
@@ -169,7 +169,7 @@ class NonceTest extends TestCase
         // post a foo token
         $this->response = $this->http->request(
             'POST',
-            'ajax/post-token.php', [
+            'validate-token.php', [
                 'headers' => [
                     'X-CSRF-Token' => 'foo'
                 ]

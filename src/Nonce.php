@@ -82,7 +82,10 @@ class Nonce
               break;
 
             case $_SERVER['REQUEST_METHOD'] === 'GET':
-                // ...
+                if (!$this->nonceSession->validateToken($_GET[$this->nonceSession::NAME])) {
+                    $this->nonceSession->startToken();
+                    HttpResponse::forbidden();
+                }
                 break;
 
             case $_SERVER['REQUEST_METHOD'] === 'POST':
@@ -93,7 +96,7 @@ class Nonce
                 break;
 
             default:
-                // ...
+                HttpResponse::forbidden();
                 break;
         }
     }
