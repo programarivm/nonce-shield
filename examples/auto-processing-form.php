@@ -10,9 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo 'This request was successfully protected against CSRF attacks.';
 }
 
-elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
-
-    (new Nonce)->startToken(); ?>
+elseif ($_SERVER['REQUEST_METHOD'] == 'GET') { ?>
 
     <!doctype html>
     <html lang="en">
@@ -36,7 +34,7 @@ elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
                     <label for="msg">Message:</label>
                     <textarea id="msg" name="user_message"></textarea>
                 </div>
-                <?php echo (new Nonce)->htmlInput(); ?>
+                <?php echo (new Nonce)->htmlInput('/auto-processing-form.php'); ?>
                 <div>
                     <input type="submit" value="Submit">
                 </div>

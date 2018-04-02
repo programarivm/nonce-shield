@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class NonceTest extends TestCase
 {
-    const BASE_URI = 'http://localhost:8000/';
+    const BASE_URI = 'http://localhost:8001/';
 
     const TIME_DELAY = 1;
 

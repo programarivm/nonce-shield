@@ -1,8 +1,6 @@
 <?php
 namespace NonceShield\Tests\Unit;
 
-use NonceShield\NonceSession;
-use NonceShield\Exception\EmptyCsrfTokenException;
 use NonceShield\Exception\UnstartedSessionException;
 use NonceShield\Html;
 use PHPUnit\Framework\TestCase;
@@ -12,40 +10,42 @@ class HtmlTest extends TestCase
     /**
      * @test
      */
-    public function input()
+    public function instantiate()
     {
         session_start();
-        $csrfSession = (new NonceSession)->startToken();
-        $htmlInput = (new Html($csrfSession))->input();
-        $token = $csrfSession->getToken();
+        $html = new Html;
         session_destroy();
 
-        $this->assertEquals($htmlInput,
-            '<input type="hidden" name="' . $csrfSession::NAME . '" id="' . $csrfSession::NAME . '" value="' . $token . '" />'
-        );
+        $this->assertInstanceOf(Html::class, $html);
     }
 
     /**
      * @test
      */
-    public function input_without_csrf_token_in_session()
+    public function instantiate_without_session_started()
     {
-        $caught = false;
+        $this->expectException(UnstartedSessionException::class);
 
+        $html = new Html;
+    }
+
+    /**
+     * @test
+     */
+    public function input()
+    {
         session_start();
+        $html = new Html;
+        $attrs = [
+            'name' => '_nonce_shield_token',
+            'id' => '_nonce_shield_token',
+            'value' => 'foo'
+        ];
+        $htmlInput = $html->input($attrs);
+        session_destroy();
 
-        try {
-            $csrfSession = new NonceSession;
-            $htmlInput = (new Html($csrfSession))->input();
-        } catch (EmptyCsrfTokenException $e) {
-            $caught = true;
-            $this->assertTrue(true);
-        } finally {
-            session_destroy();
-        }
-
-        if (!$caught) {
-            $this->assertTrue(false);
-        }
+        $this->assertEquals($htmlInput,
+            '<input type="hidden" name="' . $attrs['name'] . '" id="' . $attrs['id'] . '" value="' . $attrs['value'] . '" />'
+        );
     }
 }

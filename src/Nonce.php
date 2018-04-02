@@ -1,14 +1,11 @@
 <?php
 namespace NonceShield;
 
-use NonceShield\NonceSession;
 use NonceShield\Html;
 use NonceShield\HttpResponse;
 
 /**
  * Nonce class.
- *
- * Acts as a wrapper of NonceShield\Session and NonceShield\Html.
  *
  * @author Jordi Bassagañas <info@programarivm.com>
  * @link https://programarivm.com
@@ -16,12 +13,7 @@ use NonceShield\HttpResponse;
  */
 class Nonce
 {
-    /**
-     * The nonce session.
-     *
-     * @var NonceSession
-     */
-    private $nonceSession;
+    const NAME = '_nonce_shield_token';
 
     /**
      * HTML renderer.
@@ -35,26 +27,20 @@ class Nonce
      */
     public function __construct()
     {
-        $this->nonceSession = new NonceSession;
-        $this->html = new Html($this->nonceSession);
+        $this->html = new Html;
     }
 
     /**
-     * Creates and stores a new nonce token into the session.
-     */
-    public function startToken()
-    {
-        $this->nonceSession->startToken();
-    }
-
-    /**
-     * Gets the current nonce token from the session.
-     *
-     * @return string
+     * Creates a new nonce token.
      */
     public function getToken()
     {
-        return $this->nonceSession->getToken();
+      $options = [
+        'cost' => 15,
+        'salt' => session_id())
+      ];
+
+      return password_hash($slug, PASSWORD_BCRYPT, $options);
     }
 
     /**
@@ -62,9 +48,17 @@ class Nonce
      *
      * @return string
      */
-    public function htmlInput()
+    public function htmlInput($url)
     {
-        return $this->html->input();
+        $token = $this->getToken($url);
+
+        $attrs = [
+            'name' => self::NAME,
+            'id' => self::NAME,
+            'value' => $token
+        ];
+
+        return $this->html->input($token);
     }
 
     /**

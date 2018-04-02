@@ -4,15 +4,13 @@ namespace NonceShield;
 use NonceShield\Exception\UnstartedSessionException;
 
 /**
- * Html class.
- *
- * Renders html tags with the nonce token embedded.
+ * Validator class.
  *
  * @author Jordi Bassagañas <info@programarivm.com>
  * @link https://programarivm.com
  * @license GPL
  */
-class Html
+class Validator
 {
     /**
      * Constructor.
@@ -25,16 +23,17 @@ class Html
     }
 
     /**
-     * Returns a hidden HTML input with the value of the current nonce token embedded.
+     * Validates the nonce token against the incoming url.
      *
-     * @param array $attrs
+     * @return boolean
      */
-    public function input($attrs)
-    {
+    public function token($token, $url) {
         if (empty(session_id())) {
             throw new UnstartedSessionException();
         }
 
-        return '<input type="hidden" name="' . $attrs['name'] . '" id="' . $attrs['id'] . '" value="' . $attrs['value'] . '" />';
+        // ...
+
+        return true;
     }
 }
