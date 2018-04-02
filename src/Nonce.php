@@ -21,7 +21,7 @@ class Nonce
      *
      * @var NonceSession
      */
-    private $csrfSession;
+    private $nonceSession;
 
     /**
      * HTML renderer.
@@ -35,8 +35,8 @@ class Nonce
      */
     public function __construct()
     {
-        $this->csrfSession = new NonceSession;
-        $this->html = new Html($this->csrfSession);
+        $this->nonceSession = new NonceSession;
+        $this->html = new Html($this->nonceSession);
     }
 
     /**
@@ -44,7 +44,7 @@ class Nonce
      */
     public function startToken()
     {
-        $this->csrfSession->startToken();
+        $this->nonceSession->startToken();
     }
 
     /**
@@ -54,7 +54,7 @@ class Nonce
      */
     public function getToken()
     {
-        return $this->csrfSession->getToken();
+        return $this->nonceSession->getToken();
     }
 
     /**
@@ -73,20 +73,27 @@ class Nonce
     public function validateToken()
     {
         switch (true) {
-            case $_SERVER['REQUEST_METHOD'] !== 'POST':
-                HttpResponse::methodNotAllowed();
-                break;
 
             case isset($_SERVER['HTTP_X_CSRF_TOKEN']):
-                if (!$this->csrfSession->validateToken($_SERVER['HTTP_X_CSRF_TOKEN'])) {
+              if (!$this->nonceSession->validateToken($_SERVER['HTTP_X_CSRF_TOKEN'])) {
+                  $this->nonceSession->startToken();
+                  HttpResponse::forbidden();
+              }
+              break;
+
+            case $_SERVER['REQUEST_METHOD'] === 'GET':
+                // ...
+                break;
+
+            case $_SERVER['REQUEST_METHOD'] === 'POST':
+                if (!$this->nonceSession->validateToken($_POST[$this->nonceSession::NAME])) {
+                    $this->nonceSession->startToken();
                     HttpResponse::forbidden();
                 }
                 break;
 
             default:
-                if (!$this->csrfSession->validateToken($_POST[$this->csrfSession::NAME])) {
-                    HttpResponse::forbidden();
-                }
+                // ...
                 break;
         }
     }

@@ -25,6 +25,17 @@ class NonceTest extends TestCase
      */
     private $response;
 
+    private function scrapToken($html)
+    {
+      $dom = new \DOMDocument;
+      $dom->loadHTML($html);
+      $xp = new \DOMXpath($dom);
+      $nodes = $xp->query('//input[@name="_nonce_shield_token"]');
+      $node = $nodes->item(0);
+
+      return $node->getAttribute('value');
+    }
+
     public function setUp()
     {
         sleep(self::TIME_DELAY);
@@ -46,14 +57,7 @@ class NonceTest extends TestCase
     public function auto_processing_form_GET_200()
     {
         $this->response = $this->http->request('GET', 'auto-processing-form.php');
-
-        $dom = new \DOMDocument;
-        $dom->loadHTML($this->response->getBody()->getContents());
-
-        $xp = new \DOMXpath($dom);
-        $nodes = $xp->query('//input[@name="_nonce_shield_token"]');
-        $node = $nodes->item(0);
-        $token = $node->getAttribute('value');
+        $token = $this->scrapToken($this->response->getBody()->getContents());
 
         $this->assertEquals(200, $this->response->getStatusCode());
         $this->assertTrue(is_string($token));
@@ -66,18 +70,7 @@ class NonceTest extends TestCase
     public function auto_processing_form_POST_200()
     {
         $this->response = $this->http->request('GET', 'auto-processing-form.php');
-
-        $dom = new \DOMDocument;
-        $dom->loadHTML($this->response->getBody()->getContents());
-
-        $xp = new \DOMXpath($dom);
-        $nodes = $xp->query('//input[@name="_nonce_shield_token"]');
-        $node = $nodes->item(0);
-        $token = $node->getAttribute('value');
-
-        $this->assertEquals(200, $this->response->getStatusCode());
-        $this->assertTrue(is_string($token));
-        $this->assertEquals(40, strlen($token));
+        $token = $this->scrapToken($this->response->getBody()->getContents());
 
         $this->response = $this->http->request(
             'POST',
@@ -96,12 +89,11 @@ class NonceTest extends TestCase
      */
     public function auto_processing_form_POST_403()
     {
-        // HTTP/1.1 GET
+        // get the nonce token
         $this->response = $this->http->request('GET', 'auto-processing-form.php');
-        // do nothing with the response
+        $token = $this->scrapToken($this->response->getBody()->getContents());
 
-        // HTTP/1.1 POST
-        // send a foo token
+        // post a foo token
         $this->response = $this->http->request(
             'POST',
             'auto-processing-form.php', [
@@ -116,6 +108,12 @@ class NonceTest extends TestCase
             '{"message":"Forbidden."}',
             $this->response->getBody()->getContents()
         );
+
+        // get the (new) nonce token again
+        $this->response = $this->http->request('GET', 'auto-processing-form.php');
+        $tokenRecreated = $this->scrapToken($this->response->getBody()->getContents());
+
+        $this->assertNotEquals($token, $tokenRecreated);
     }
 
     /**
@@ -147,10 +145,6 @@ class NonceTest extends TestCase
             true
         );
 
-        $this->assertEquals(200, $this->response->getStatusCode());
-        $this->assertTrue(is_string($json['_nonce_shield_token']));
-        $this->assertEquals(40, strlen($json['_nonce_shield_token']));
-
         $this->response = $this->http->request(
             'POST',
             'ajax/post-token.php', [
@@ -168,12 +162,11 @@ class NonceTest extends TestCase
      */
     public function ajax_post_token_403()
     {
-        // HTTP/1.1 GET
-        $this->response = $this->http->request('GET', 'ajax/get-token.php');
-        // do nothing with the response
+        // get the nonce token
+        $this->response = $this->http->request('GET', 'auto-processing-form.php');
+        $token = $this->scrapToken($this->response->getBody()->getContents());
 
-        // HTTP/1.1 POST
-        // send a foo token
+        // post a foo token
         $this->response = $this->http->request(
             'POST',
             'ajax/post-token.php', [
@@ -188,32 +181,11 @@ class NonceTest extends TestCase
             '{"message":"Forbidden."}',
             $this->response->getBody()->getContents()
         );
-    }
 
-    /**
-     * @test
-     */
-    public function ajax_post_token_405()
-    {
-        // HTTP/1.1 GET
-        $this->response = $this->http->request('GET', 'ajax/get-token.php');
-        // do nothing with the response
+        // get the (new) nonce token again
+        $this->response = $this->http->request('GET', 'auto-processing-form.php');
+        $tokenRecreated = $this->scrapToken($this->response->getBody()->getContents());
 
-        // HTTP/1.1 GET
-        // send a foo token
-        $this->response = $this->http->request(
-            'GET',
-            'ajax/post-token.php', [
-                'headers' => [
-                    'X-CSRF-Token' => 'foo'
-                ]
-            ]
-        );
-
-        $this->assertEquals(405, $this->response->getStatusCode());
-        $this->assertEquals(
-            '{"message":"Method not allowed."}',
-            $this->response->getBody()->getContents()
-        );
+        $this->assertNotEquals($token, $tokenRecreated);
     }
 }
