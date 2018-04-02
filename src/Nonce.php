@@ -67,20 +67,30 @@ class Nonce
      */
     public function validateToken()
     {
-        $token = $this->getToken(Uri::withoutVar($_SERVER['REQUEST_URI'], self::NAME));
-
         switch (true) {
-
             case isset($_SERVER['HTTP_X_CSRF_TOKEN']):
+                $token = $this->getToken($_SERVER['REQUEST_URI'], self::NAME);
                 if ($token !== $_SERVER['HTTP_X_CSRF_TOKEN']) {
                     HttpResponse::forbidden();
                 }
               break;
 
-            default:
-                if ($token !== Uri::getVar(self::NAME)) {
+            case $_SERVER['REQUEST_METHOD'] === 'POST':
+                $token = $this->getToken($_SERVER['REQUEST_URI'], self::NAME);
+                if ($token !== $_POST[self::NAME]) {
                     HttpResponse::forbidden();
                 }
+                break;
+
+            case $_SERVER['REQUEST_METHOD'] === 'GET':
+                $token = $this->getToken(Uri::withoutVar($_SERVER['REQUEST_URI'], self::NAME));
+                if ($token !== Uri::getVar($_SERVER['REQUEST_URI'], self::NAME)) {
+                    HttpResponse::forbidden();
+                }
+                break;
+
+            default:
+                HttpResponse::forbidden();
                 break;
         }
     }

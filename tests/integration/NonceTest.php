@@ -61,7 +61,7 @@ class NonceTest extends TestCase
 
         $this->assertEquals(200, $this->response->getStatusCode());
         $this->assertTrue(is_string($token));
-        $this->assertEquals(40, strlen($token));
+        $this->assertEquals(60, strlen($token));
     }
 
     /**
@@ -108,12 +108,6 @@ class NonceTest extends TestCase
             '{"message":"Forbidden."}',
             $this->response->getBody()->getContents()
         );
-
-        // get the (new) nonce token again
-        $this->response = $this->http->request('GET', 'auto-processing-form.php');
-        $tokenRecreated = $this->scrapToken($this->response->getBody()->getContents());
-
-        $this->assertNotEquals($token, $tokenRecreated);
     }
 
     /**
@@ -130,7 +124,7 @@ class NonceTest extends TestCase
 
         $this->assertEquals(200, $this->response->getStatusCode());
         $this->assertTrue(is_string($json['_nonce_shield_token']));
-        $this->assertEquals(40, strlen($json['_nonce_shield_token']));
+        $this->assertEquals(60, strlen($json['_nonce_shield_token']));
     }
 
     /**
