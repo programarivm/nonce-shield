@@ -3,6 +3,7 @@ namespace NonceShield;
 
 use NonceShield\Html;
 use NonceShield\HttpResponse;
+use NonceShield\Uri;
 
 /**
  * Nonce class.
@@ -31,7 +32,7 @@ class Nonce
     }
 
     /**
-     * Creates a new nonce token.
+     * Calculates the nonce token.
      */
     public function getToken($url)
     {
@@ -62,35 +63,24 @@ class Nonce
     }
 
     /**
-     * Validates the incoming nonce token against the session's token.
+     * Validates the incoming nonce token.
      */
     public function validateToken()
     {
+        $token = $this->getToken(Uri::withoutVar($_SERVER['REQUEST_URI'], self::NAME));
+
         switch (true) {
 
             case isset($_SERVER['HTTP_X_CSRF_TOKEN']):
-              if (!$this->nonceSession->validateToken($_SERVER['HTTP_X_CSRF_TOKEN'])) {
-                  $this->nonceSession->startToken();
-                  HttpResponse::forbidden();
-              }
+                if ($token !== $_SERVER['HTTP_X_CSRF_TOKEN']) {
+                    HttpResponse::forbidden();
+                }
               break;
 
-            case $_SERVER['REQUEST_METHOD'] === 'GET':
-                if (!$this->nonceSession->validateToken($_GET[$this->nonceSession::NAME])) {
-                    $this->nonceSession->startToken();
-                    HttpResponse::forbidden();
-                }
-                break;
-
-            case $_SERVER['REQUEST_METHOD'] === 'POST':
-                if (!$this->nonceSession->validateToken($_POST[$this->nonceSession::NAME])) {
-                    $this->nonceSession->startToken();
-                    HttpResponse::forbidden();
-                }
-                break;
-
             default:
-                HttpResponse::forbidden();
+                if ($token !== Uri::getVar(self::NAME)) {
+                    HttpResponse::forbidden();
+                }
                 break;
         }
     }
