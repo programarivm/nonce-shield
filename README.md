@@ -1,10 +1,10 @@
 ## CSRF Shield
 
-[![Build Status](https://travis-ci.org/programarivm/csrf-shield.svg?branch=master)](https://travis-ci.org/programarivm/csrf-shield)
-[![Packagist](https://img.shields.io/packagist/dt/programarivm/csrf-shield.svg)](https://packagist.org/packages/programarivm/csrf-shield)
+[![Build Status](https://travis-ci.org/programarivm/nonce-shield.svg?branch=master)](https://travis-ci.org/programarivm/nonce-shield)
+[![Packagist](https://img.shields.io/packagist/dt/programarivm/nonce-shield.svg)](https://packagist.org/packages/programarivm/nonce-shield)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-![CSRF Shield](/resources/csrf-shield.jpg?raw=true)
+![CSRF Shield](/resources/nonce-shield.jpg?raw=true)
 
 This is a simple, framework-agnostic library that helps you protect your PHP web apps from CSRF attacks.  CSRF Shield is built on the idea of **sending tokens with the POST method only**; otherwise the server will respond with a `405` status code (`Method Not Allowed`).
 
@@ -14,7 +14,7 @@ This is a simple, framework-agnostic library that helps you protect your PHP web
 
 Via composer:
 
-    $ composer require programarivm/csrf-shield
+    $ composer require programarivm/nonce-shield
 
 ### 2. Instantiation
 

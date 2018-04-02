@@ -1,5 +1,5 @@
 {
-  "name": "programarivm/csrf-shield",
+  "name": "programarivm/nonce-shield",
   "description": "This is a simple, framework-agnostic library that protects your PHP web apps from CSRF attacks.",
   "type": "library",
   "license": "GPL-3.0-only",
