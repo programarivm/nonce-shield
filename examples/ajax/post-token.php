@@ -1,9 +1,9 @@
 <?php
-use CsrfShield\Protection;
+use CsrfShield\Nonce;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 session_start();
 
-(new Protection)->validateToken();
+(new Nonce)->validateToken();
 echo 'This request was successfully protected against CSRF attacks.';

@@ -6,15 +6,15 @@ use CsrfShield\Html;
 use CsrfShield\HttpResponse;
 
 /**
- * Protection class.
+ * Nonce class.
  *
- * Acts as a wrapper of CsrfShield\CsrfSession and CsrfShield\Html.
+ * Acts as a wrapper of NonceShield\Session and NonceShield\Html.
  *
  * @author Jordi Bassagañas <info@programarivm.com>
  * @link https://programarivm.com
  * @license GPL
  */
-class Protection
+class Nonce
 {
     /**
      * The CSRF session.

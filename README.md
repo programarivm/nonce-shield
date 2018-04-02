@@ -18,38 +18,38 @@ Via composer:
 
 ### 2. Instantiation
 
-Make sure that a PHP session is been started already and then use a `CsrfShield\Protection` object as it is shown below.
+Make sure that a PHP session is been started already and then use a `CsrfShield\Nonce` object as it is shown below.
 
 To create/store a new CSRF token into the session:
 
 ```php
 <?php
-use CsrfShield\Protection;
+use CsrfShield\Nonce;
 
 session_start();
 // ...
-(new Protection)->startToken();
+(new Nonce)->startToken();
 ```
 
 To protect a PHP code snippet that responds to a POST request:
 
 ```php
 <?php
-use CsrfShield\Protection;
+use CsrfShield\Nonce;
 
 session_start();
 // ...
-(new Protection)->validateToken();
+(new Nonce)->validateToken();
 ```
 
-### 3. `CsrfShield\Protection` Methods
+### 3. `CsrfShield\Nonce` Methods
 
 #### 3.1. `startToken()`
 
 Creates and stores a new CSRF token into the session.
 
 ```php
-(new Protection)->startToken();
+(new Nonce)->startToken();
 ```
 
 > **Side Note**: The name of the CSRF session variable is `_csrf_shield_token` by default.
@@ -59,7 +59,7 @@ Creates and stores a new CSRF token into the session.
 Gets the current CSRF token from the session.
 
 ```php
-(new Protection)->getToken();
+(new Nonce)->getToken();
 ```
 
 #### 3.3. `validateToken()`
@@ -67,7 +67,7 @@ Gets the current CSRF token from the session.
 Validates the incoming CSRF token against the current session's token.
 
 ```php
-(new Protection)->validateToken();
+(new Nonce)->validateToken();
 ```
 
 The token can be read either through `$_POST['_csrf_shield_token']`, or through `$_SERVER['HTTP_X_CSRF_TOKEN']` if an AJAX call is made with an `X-CSRF-Token` header.
@@ -79,7 +79,7 @@ If the token is not valid the server will send a `403` response (`Forbidden`).
 HTML input tag with the embedded value of the current CSRF token.
 
 ```php
-(new Protection)->htmlInput();
+(new Nonce)->htmlInput();
 ```
 
 Here is an example:
@@ -88,7 +88,7 @@ Here is an example:
 
 ### 4. Hello World
 
-Run the `auto-processing-form.php` example with PHP's built-in server to see `CsrfShield\Protection` in action:
+Run the `auto-processing-form.php` example with PHP's built-in server to see `CsrfShield\Nonce` in action:
 
     cd examples
     php -S localhost:8000

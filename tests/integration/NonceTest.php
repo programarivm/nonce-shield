@@ -1,11 +1,11 @@
 <?php
 namespace CsrfShield\Tests\Integration;
 
-use CsrfShield\Protection;
+use CsrfShield\Nonce;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 
-class ProtectionTest extends TestCase
+class NonceTest extends TestCase
 {
     const BASE_URI = 'http://localhost:8000/';
 
