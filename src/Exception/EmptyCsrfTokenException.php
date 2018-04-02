@@ -1,7 +1,7 @@
 <?php
-namespace CsrfShield\Exception;
+namespace NonceShield\Exception;
 
-use CsrfShield\Exception;
+use NonceShield\Exception;
 
 /**
  * Thrown when there is no csrf token in the session.

@@ -1,9 +1,9 @@
 <?php
-namespace CsrfShield;
+namespace NonceShield;
 
-use CsrfShield\NonceSession;
-use CsrfShield\Exception\EmptyCsrfTokenException;
-use CsrfShield\Exception\UnstartedSessionException;
+use NonceShield\NonceSession;
+use NonceShield\Exception\EmptyCsrfTokenException;
+use NonceShield\Exception\UnstartedSessionException;
 
 /**
  * Html class.

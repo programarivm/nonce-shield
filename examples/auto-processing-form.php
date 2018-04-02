@@ -1,5 +1,5 @@
 <?php
-use CsrfShield\Nonce;
+use NonceShield\Nonce;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

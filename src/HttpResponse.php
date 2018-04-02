@@ -1,8 +1,8 @@
 <?php
-namespace CsrfShield;
+namespace NonceShield;
 
-use CsrfShield\NonceSession;
-use CsrfShield\Html;
+use NonceShield\NonceSession;
+use NonceShield\Html;
 
 /**
  * HTTP responses.

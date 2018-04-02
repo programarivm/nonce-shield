@@ -18,13 +18,13 @@ Via composer:
 
 ### 2. Instantiation
 
-Make sure that a PHP session is been started already and then use a `CsrfShield\Nonce` object as it is shown below.
+Make sure that a PHP session is been started already and then use a `NonceShield\Nonce` object as it is shown below.
 
 To create/store a new CSRF token into the session:
 
 ```php
 <?php
-use CsrfShield\Nonce;
+use NonceShield\Nonce;
 
 session_start();
 // ...
@@ -35,14 +35,14 @@ To protect a PHP code snippet that responds to a POST request:
 
 ```php
 <?php
-use CsrfShield\Nonce;
+use NonceShield\Nonce;
 
 session_start();
 // ...
 (new Nonce)->validateToken();
 ```
 
-### 3. `CsrfShield\Nonce` Methods
+### 3. `NonceShield\Nonce` Methods
 
 #### 3.1. `startToken()`
 
@@ -88,7 +88,7 @@ Here is an example:
 
 ### 4. Hello World
 
-Run the `auto-processing-form.php` example with PHP's built-in server to see `CsrfShield\Nonce` in action:
+Run the `auto-processing-form.php` example with PHP's built-in server to see `NonceShield\Nonce` in action:
 
     cd examples
     php -S localhost:8000

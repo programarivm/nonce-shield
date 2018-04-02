@@ -1,10 +1,10 @@
 <?php
-namespace CsrfShield\Tests\Unit;
+namespace NonceShield\Tests\Unit;
 
-use CsrfShield\NonceSession;
-use CsrfShield\Exception\EmptyCsrfTokenException;
-use CsrfShield\Exception\UnstartedSessionException;
-use CsrfShield\Html;
+use NonceShield\NonceSession;
+use NonceShield\Exception\EmptyCsrfTokenException;
+use NonceShield\Exception\UnstartedSessionException;
+use NonceShield\Html;
 use PHPUnit\Framework\TestCase;
 
 class HtmlTest extends TestCase

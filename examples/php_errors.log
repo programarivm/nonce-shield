@@ -1,0 +1,16 @@
+[02-Apr-2018 12:29:56 Europe/London] PHP Fatal error:  Uncaught Error: Class 'NonceShield\Nonce' not found in /home/standard/projects/nonce-shield/examples/auto-processing-form.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/standard/projects/nonce-shield/examples/auto-processing-form.php on line 15
+[02-Apr-2018 12:29:57 Europe/London] PHP Fatal error:  Uncaught Error: Class 'NonceShield\Nonce' not found in /home/standard/projects/nonce-shield/examples/auto-processing-form.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/standard/projects/nonce-shield/examples/auto-processing-form.php on line 15
+[02-Apr-2018 12:29:58 Europe/London] PHP Fatal error:  Uncaught Error: Class 'NonceShield\Nonce' not found in /home/standard/projects/nonce-shield/examples/auto-processing-form.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/standard/projects/nonce-shield/examples/auto-processing-form.php on line 15
+[02-Apr-2018 12:29:58 Europe/London] PHP Fatal error:  Uncaught Error: Class 'NonceShield\Nonce' not found in /home/standard/projects/nonce-shield/examples/auto-processing-form.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/standard/projects/nonce-shield/examples/auto-processing-form.php on line 9

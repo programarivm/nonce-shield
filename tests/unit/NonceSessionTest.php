@@ -1,9 +1,9 @@
 <?php
-namespace CsrfShield\Tests\Unit;
+namespace NonceShield\Tests\Unit;
 
-use CsrfShield\NonceSession;
-use CsrfShield\Exception\EmptyCsrfTokenException;
-use CsrfShield\Exception\UnstartedSessionException;
+use NonceShield\NonceSession;
+use NonceShield\Exception\EmptyCsrfTokenException;
+use NonceShield\Exception\UnstartedSessionException;
 use PHPUnit\Framework\TestCase;
 
 class NonceSessionTest extends TestCase

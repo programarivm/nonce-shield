@@ -1,5 +1,5 @@
 <?php
-namespace CsrfShield;
+namespace NonceShield;
 
 /**
  * Exception interface.

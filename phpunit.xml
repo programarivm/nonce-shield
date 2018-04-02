@@ -4,7 +4,7 @@
          stopOnFailure="false"
          stderr="true">
   <testsuites>
-    <testsuite name="CsrfShield tests">
+    <testsuite name="NonceShield tests">
       <directory>tests</directory>
     </testsuite>
   </testsuites>

@@ -1,7 +1,7 @@
 <?php
-namespace CsrfShield\Tests\Integration;
+namespace NonceShield\Tests\Integration;
 
-use CsrfShield\Nonce;
+use NonceShield\Nonce;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 

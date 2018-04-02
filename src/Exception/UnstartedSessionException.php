@@ -1,7 +1,7 @@
 <?php
-namespace CsrfShield\Exception;
+namespace NonceShield\Exception;
 
-use CsrfShield\Exception;
+use NonceShield\Exception;
 
 /**
  * Thrown when the session is not been started.
