@@ -7,7 +7,7 @@ use NonceShield\Exception\UnstartedSessionException;
 /**
  * NonceSession class.
  *
- * Handles the CSRF token in the PHP session.
+ * Handles the nonce token in the PHP session.
  *
  * @author Jordi Bassagañas <info@programarivm.com>
  * @link https://programarivm.com
@@ -15,7 +15,7 @@ use NonceShield\Exception\UnstartedSessionException;
  */
 class NonceSession
 {
-    const NAME = '_csrf_shield_token';
+    const NAME = '_nonce_shield_token';
 
     /**
      * Constructor.
@@ -28,7 +28,7 @@ class NonceSession
     }
 
     /**
-     * Creates and stores a new CSRF token into the session.
+     * Creates and stores a new nonce token into the session.
      *
      * @return NonceSession
      */
@@ -43,7 +43,7 @@ class NonceSession
     }
 
     /**
-     * Gets the current CSRF token from the session.
+     * Gets the current nonce token from the session.
      *
      * @return string
      */
@@ -60,7 +60,7 @@ class NonceSession
     }
 
     /**
-     * Validates the incoming CSRF token against the session.
+     * Validates the incoming nonce token against the session.
      *
      * @return boolean
      */

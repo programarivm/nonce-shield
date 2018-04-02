@@ -17,7 +17,7 @@ use NonceShield\Exception\UnstartedSessionException;
 class Html
 {
     /**
-     * The CSRF session.
+     * The nonce session.
      *
      * @var NonceSession
      */
@@ -36,7 +36,7 @@ class Html
     }
 
     /**
-     * Returns an HTML input tag with the value of the current CSRF token embedded.
+     * Returns an HTML input tag with the value of the current nonce token embedded.
      */
     public function input()
     {

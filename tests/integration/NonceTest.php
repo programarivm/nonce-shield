@@ -51,7 +51,7 @@ class NonceTest extends TestCase
         $dom->loadHTML($this->response->getBody()->getContents());
 
         $xp = new \DOMXpath($dom);
-        $nodes = $xp->query('//input[@name="_csrf_shield_token"]');
+        $nodes = $xp->query('//input[@name="_nonce_shield_token"]');
         $node = $nodes->item(0);
         $token = $node->getAttribute('value');
 
@@ -71,7 +71,7 @@ class NonceTest extends TestCase
         $dom->loadHTML($this->response->getBody()->getContents());
 
         $xp = new \DOMXpath($dom);
-        $nodes = $xp->query('//input[@name="_csrf_shield_token"]');
+        $nodes = $xp->query('//input[@name="_nonce_shield_token"]');
         $node = $nodes->item(0);
         $token = $node->getAttribute('value');
 
@@ -83,7 +83,7 @@ class NonceTest extends TestCase
             'POST',
             'auto-processing-form.php', [
                 'form_params' =>  [
-                    '_csrf_shield_token' => $token
+                    '_nonce_shield_token' => $token
                 ]
             ]
         );
@@ -106,7 +106,7 @@ class NonceTest extends TestCase
             'POST',
             'auto-processing-form.php', [
                 'form_params' =>  [
-                    '_csrf_shield_token' => 'foo'
+                    '_nonce_shield_token' => 'foo'
                 ]
             ]
         );
@@ -131,8 +131,8 @@ class NonceTest extends TestCase
         );
 
         $this->assertEquals(200, $this->response->getStatusCode());
-        $this->assertTrue(is_string($json['_csrf_shield_token']));
-        $this->assertEquals(40, strlen($json['_csrf_shield_token']));
+        $this->assertTrue(is_string($json['_nonce_shield_token']));
+        $this->assertEquals(40, strlen($json['_nonce_shield_token']));
     }
 
     /**
@@ -148,14 +148,14 @@ class NonceTest extends TestCase
         );
 
         $this->assertEquals(200, $this->response->getStatusCode());
-        $this->assertTrue(is_string($json['_csrf_shield_token']));
-        $this->assertEquals(40, strlen($json['_csrf_shield_token']));
+        $this->assertTrue(is_string($json['_nonce_shield_token']));
+        $this->assertEquals(40, strlen($json['_nonce_shield_token']));
 
         $this->response = $this->http->request(
             'POST',
             'ajax/post-token.php', [
                 'headers' => [
-                    'X-CSRF-Token' => $json['_csrf_shield_token']
+                    'X-CSRF-Token' => $json['_nonce_shield_token']
                 ]
             ]
         );

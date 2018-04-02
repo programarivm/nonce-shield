@@ -17,7 +17,7 @@ use NonceShield\HttpResponse;
 class Nonce
 {
     /**
-     * The CSRF session.
+     * The nonce session.
      *
      * @var NonceSession
      */
@@ -40,7 +40,7 @@ class Nonce
     }
 
     /**
-     * Creates and stores a new CSRF token into the session.
+     * Creates and stores a new nonce token into the session.
      */
     public function startToken()
     {
@@ -48,7 +48,7 @@ class Nonce
     }
 
     /**
-     * Gets the current CSRF token from the session.
+     * Gets the current nonce token from the session.
      *
      * @return string
      */
@@ -58,7 +58,7 @@ class Nonce
     }
 
     /**
-     * Returns an HTML input tag with the value of the current CSRF token embedded.
+     * Returns an HTML input tag with the value of the current nonce token embedded.
      *
      * @return string
      */
@@ -68,7 +68,7 @@ class Nonce
     }
 
     /**
-     * Validates the incoming CSRF token against the session's token.
+     * Validates the incoming nonce token against the session's token.
      */
     public function validateToken()
     {
