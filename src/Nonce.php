@@ -33,14 +33,14 @@ class Nonce
     /**
      * Creates a new nonce token.
      */
-    public function getToken()
+    public function getToken($url)
     {
       $options = [
-        'cost' => 15,
-        'salt' => session_id())
+        'cost' => 11,
+        'salt' => session_id()
       ];
 
-      return password_hash($slug, PASSWORD_BCRYPT, $options);
+      return password_hash($url, PASSWORD_BCRYPT, $options);
     }
 
     /**
@@ -58,7 +58,7 @@ class Nonce
             'value' => $token
         ];
 
-        return $this->html->input($token);
+        return $this->html->input($attrs);
     }
 
     /**
