@@ -16,12 +16,15 @@ Identifies this URI temporarily (until the session is renewed):
 
     /url-to-protect/something.php
 
-Nonce Shield is specially suitable for when you want to protect GET resources that perform sensitive operations on the server side -- update a user, remove a comment, etc.
+Nonce Shield is specially suitable for when you want to protect GET resources that perform sensitive operations on the server side -- update a user, remove a comment, etc -- as the ones shown next.
 
 `/user/update.php?id=3452&_nonce_shield_token=$2y$11$dkihrvmrerja3v787sgh3eyQDM9zb2enMxwEE7OPGfzLdvHrAZ52q`
+
 `/comment/remove.php?id=3452&_nonce_shield_token=$2y$11$pqkld10rrrd23kv3ou010u5nEvDHdx5IecuSuIN94nOYiMDydzvkq`
 
 > **Side Note**: If you are not a big fan of sending tokens in GET requests, have a look at [CSRF Shield](https://github.com/programarivm/csrf-shield) which is a OWASP-friendly CSRF protector that won't disclose tokens.
+
+It also works with `POST`, `PUT`, `PATCH` and `DELETE`.
 
 ### 1. Install
 
@@ -31,7 +34,7 @@ Via composer:
 
 ### 2. Where Is the Token Appended?
 
-It depends on the HTTP method being used:
+Depends on the HTTP method being used:
 
 | HTTP Method   |  Nonce                          |
 |---------------|---------------------------------|
