@@ -229,4 +229,56 @@ class NonceTest extends TestCase
             $this->response->getBody()->getContents()
         );
     }
+
+    /**
+     * @test
+     */
+    public function validate_token_DELETE_200()
+    {
+        $this->response = $this->http->request('GET', 'start-session.php');
+
+        $sessId = HttpHeader::getSessId(
+            'PHPSESSID',
+            $this->response->getHeaderLine('Set-Cookie')
+        );
+
+        $options = [
+          'cost' => 11,
+          'salt' => $sessId
+        ];
+
+        $token = password_hash('/validate-token.php', PASSWORD_BCRYPT, $options);
+
+        $this->response = $this->http->request(
+            'DELETE',
+            'validate-token.php', [
+                'headers' => [
+                    'X-CSRF-Token' => $token
+                ]
+            ]
+        );
+
+        $this->assertEquals(200, $this->response->getStatusCode());
+    }
+
+    /**
+     * @test
+     */
+    public function validate_token_DELETE_403()
+    {
+        $this->response = $this->http->request(
+            'DELETE',
+            'validate-token.php', [
+                'headers' => [
+                    'X-CSRF-Token' => 'foo'
+                ]
+            ]
+        );
+
+        $this->assertEquals(403, $this->response->getStatusCode());
+        $this->assertEquals(
+            '{"message":"Forbidden."}',
+            $this->response->getBody()->getContents()
+        );
+    }
 }
