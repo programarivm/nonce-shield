@@ -129,7 +129,7 @@ class NonceTest extends TestCase
     /**
      * @test
      */
-    public function validate_token_POST_200()
+    public function validate_x_csrf_token_POST_200()
     {
         $this->response = $this->http->request('GET', 'start-session.php');
 
@@ -160,7 +160,7 @@ class NonceTest extends TestCase
     /**
      * @test
      */
-    public function validate_token_POST_403()
+    public function validate_token_xcsrf_header_POST_403()
     {
         $this->response = $this->http->request(
             'POST',
@@ -181,7 +181,7 @@ class NonceTest extends TestCase
     /**
      * @test
      */
-    public function validate_token_PUT_200()
+    public function validate_token_xcsrf_header_PUT_200()
     {
         $this->response = $this->http->request('GET', 'start-session.php');
 
@@ -212,7 +212,7 @@ class NonceTest extends TestCase
     /**
      * @test
      */
-    public function validate_token_PUT_403()
+    public function validate_token_xcsrf_header_PUT_403()
     {
         $this->response = $this->http->request(
             'PUT',
@@ -233,7 +233,7 @@ class NonceTest extends TestCase
     /**
      * @test
      */
-    public function validate_token_DELETE_200()
+    public function validate_token_xcsrf_header_DELETE_200()
     {
         $this->response = $this->http->request('GET', 'start-session.php');
 
@@ -264,7 +264,7 @@ class NonceTest extends TestCase
     /**
      * @test
      */
-    public function validate_token_DELETE_403()
+    public function validate_token_xcsrf_header_DELETE_403()
     {
         $this->response = $this->http->request(
             'DELETE',
