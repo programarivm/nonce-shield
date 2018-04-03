@@ -69,14 +69,14 @@ class Nonce
     {
         switch (true) {
             case isset($_SERVER['HTTP_X_CSRF_TOKEN']):
-                $token = $this->getToken($_SERVER['REQUEST_URI'], self::NAME);
+                $token = $this->getToken($_SERVER['REQUEST_URI']);
                 if ($token !== $_SERVER['HTTP_X_CSRF_TOKEN']) {
                     HttpResponse::forbidden();
                 }
               break;
 
             case $_SERVER['REQUEST_METHOD'] === 'POST':
-                $token = $this->getToken($_SERVER['REQUEST_URI'], self::NAME);
+                $token = $this->getToken($_SERVER['REQUEST_URI']);
                 if ($token !== $_POST[self::NAME]) {
                     HttpResponse::forbidden();
                 }

@@ -156,11 +156,6 @@ class NonceTest extends TestCase
      */
     public function ajax_post_token_403()
     {
-        // get the nonce token
-        $this->response = $this->http->request('GET', 'auto-processing-form.php');
-        $token = $this->scrapToken($this->response->getBody()->getContents());
-
-        // post a foo token
         $this->response = $this->http->request(
             'POST',
             'validate-token.php', [
@@ -175,11 +170,5 @@ class NonceTest extends TestCase
             '{"message":"Forbidden."}',
             $this->response->getBody()->getContents()
         );
-
-        // get the (new) nonce token again
-        $this->response = $this->http->request('GET', 'auto-processing-form.php');
-        $tokenRecreated = $this->scrapToken($this->response->getBody()->getContents());
-
-        $this->assertNotEquals($token, $tokenRecreated);
     }
 }
