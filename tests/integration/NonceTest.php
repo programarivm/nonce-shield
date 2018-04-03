@@ -31,6 +31,8 @@ class NonceTest extends TestCase
 
     public function setUp()
     {
+        $_ENV['NONCE_KEY'] = '5ZLXPORAl39jMH5ujR53jNZ3uLpNcz9跡';
+
         sleep(self::TIME_DELAY);
 
         $this->http = new Client([
@@ -112,7 +114,7 @@ class NonceTest extends TestCase
 
         $options = [
           'cost' => 11,
-          'salt' => $sessId
+          'salt' => $sessId . $_ENV['NONCE_KEY']
         ];
 
         $token = password_hash('/validate-token.php', PASSWORD_BCRYPT, $options);
@@ -154,7 +156,7 @@ class NonceTest extends TestCase
 
         $options = [
           'cost' => 11,
-          'salt' => $sessId
+          'salt' => $sessId . $_ENV['NONCE_KEY']
         ];
 
         $token = password_hash('/validate-token.php', PASSWORD_BCRYPT, $options);
@@ -206,7 +208,7 @@ class NonceTest extends TestCase
 
         $options = [
           'cost' => 11,
-          'salt' => $sessId
+          'salt' => $sessId . $_ENV['NONCE_KEY']
         ];
 
         $token = password_hash('/validate-token.php', PASSWORD_BCRYPT, $options);
@@ -258,7 +260,7 @@ class NonceTest extends TestCase
 
         $options = [
           'cost' => 11,
-          'salt' => $sessId
+          'salt' => $sessId . $_ENV['NONCE_KEY']
         ];
 
         $token = password_hash('/validate-token.php', PASSWORD_BCRYPT, $options);
@@ -310,7 +312,7 @@ class NonceTest extends TestCase
 
         $options = [
           'cost' => 11,
-          'salt' => $sessId
+          'salt' => $sessId . $_ENV['NONCE_KEY']
         ];
 
         $token = password_hash('/validate-token.php', PASSWORD_BCRYPT, $options);
