@@ -56,7 +56,7 @@ class NonceTest extends TestCase
 
         $this->assertEquals(200, $this->response->getStatusCode());
         $this->assertTrue(is_string($token));
-        $this->assertEquals(60, strlen($token));
+        $this->assertEquals(32, strlen($token));
     }
 
     /**
@@ -117,7 +117,7 @@ class NonceTest extends TestCase
           'salt' => $sessId . $_ENV['NONCE_KEY']
         ];
 
-        $token = password_hash('/validate-token.php', PASSWORD_BCRYPT, $options);
+        $token = md5(password_hash('/validate-token.php', PASSWORD_BCRYPT, $options));
 
         $this->response = $this->http->request(
             'GET',
@@ -159,7 +159,7 @@ class NonceTest extends TestCase
           'salt' => $sessId . $_ENV['NONCE_KEY']
         ];
 
-        $token = password_hash('/validate-token.php', PASSWORD_BCRYPT, $options);
+        $token = md5(password_hash('/validate-token.php', PASSWORD_BCRYPT, $options));
 
         $this->response = $this->http->request(
             'POST',
@@ -211,7 +211,7 @@ class NonceTest extends TestCase
           'salt' => $sessId . $_ENV['NONCE_KEY']
         ];
 
-        $token = password_hash('/validate-token.php', PASSWORD_BCRYPT, $options);
+        $token = md5(password_hash('/validate-token.php', PASSWORD_BCRYPT, $options));
 
         $this->response = $this->http->request(
             'PUT',
@@ -263,7 +263,7 @@ class NonceTest extends TestCase
           'salt' => $sessId . $_ENV['NONCE_KEY']
         ];
 
-        $token = password_hash('/validate-token.php', PASSWORD_BCRYPT, $options);
+        $token = md5(password_hash('/validate-token.php', PASSWORD_BCRYPT, $options));
 
         $this->response = $this->http->request(
             'DELETE',
@@ -315,7 +315,7 @@ class NonceTest extends TestCase
           'salt' => $sessId . $_ENV['NONCE_KEY']
         ];
 
-        $token = password_hash('/validate-token.php', PASSWORD_BCRYPT, $options);
+        $token = md5(password_hash('/validate-token.php', PASSWORD_BCRYPT, $options));
 
         $this->response = $this->http->request(
             'PATCH',

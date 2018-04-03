@@ -65,7 +65,7 @@ class Nonce
         'salt' => session_id() . getenv('NONCE_KEY')
       ];
 
-      return password_hash($url, PASSWORD_BCRYPT, $options);
+      return md5(password_hash($url, PASSWORD_BCRYPT, $options));
     }
 
     /**

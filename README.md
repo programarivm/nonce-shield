@@ -10,7 +10,7 @@ This is a simple, framework-agnostic library inspired by [WordPress nonces](http
 
 For example, the nonce below:
 
-    $2y$11$vcnb1ci9hm0gpb88gn48vuA2CKPTFwh8N5O4aH9mobJfsRt7us09y
+    624fd48ceb3eddfb716572d765576e23
 
 Identifies this URI temporarily (until the session is renewed):
 
@@ -18,9 +18,9 @@ Identifies this URI temporarily (until the session is renewed):
 
 Nonce Shield accepts all HTTP methods (`GET`, `POST`, `PUT`, `PATCH` and `DELETE`), but is specially suitable for when you want to protect GET resources that perform sensitive operations on the server side -- update a user, remove a comment, etc -- as the ones shown next.
 
-`/user/update.php?id=3452&_nonce_shield_token=$2y$11$dkihrvmrerja3v787sgh3eyQDM9zb2enMxwEE7OPGfzLdvHrAZ52q`
+`/user/update.php?id=3452&_nonce_shield_token=693904c4e937577ed2589ea54e56a8d5`
 
-`/comment/remove.php?id=3452&_nonce_shield_token=$2y$11$pqkld10rrrd23kv3ou010u5nEvDHdx5IecuSuIN94nOYiMDydzvkq`
+`/comment/remove.php?id=3452&_nonce_shield_token=6bee0c3437199bf2e5ca1de872a9cefd`
 
 > **Side Note**: If you are not a big fan of sending tokens in GET requests, have a look at [CSRF Shield](https://github.com/programarivm/csrf-shield) which is a OWASP-friendly CSRF protector that won't disclose tokens.
 
@@ -32,7 +32,7 @@ Via composer:
 
 ### 2. Where Is the Token Appended?
 
-Depends on the HTTP method being used:
+According to the HTTP method being used:
 
 | HTTP Method   |  Nonce                          |
 |---------------|---------------------------------|
@@ -42,16 +42,25 @@ Depends on the HTTP method being used:
 | PATCH         | `$_SERVER['HTTP_X_CSRF_TOKEN']` |
 | DELETE        | `$_SERVER['HTTP_X_CSRF_TOKEN']` |
 
-### 2. `NonceShield\Nonce` Methods
 
-#### 2.1. `getToken()`
+### 3. Security
+
+Nonce Shield assumes there is an `.env` file in your app's root folder with a `NONCE_KEY` set -- otherwise it will throw an `UnsecureNonceKeyException`.
+
+    NONCE_KEY=5ZLXPORAl39jMH5ujR53jNZ3uLpNcz9跡
+
+The `NONCE_KEY` is used as a salt when hashing the url. This value is at least 32 characters long, and must contain at least one number, one lowercase letter, one uppercase letter and a non-alphanumeric character.
+
+### 4. `NonceShield\Nonce` Methods
+
+#### 4.1. `getToken()`
 
 Gets a nonce token.
 
 ```php
 $nonce = (new Nonce)->getToken('/comment/remove.php?id=3452');
 ```
-#### 2.2. `htmlInput()`
+#### 4.2. `htmlInput()`
 
 Returns an HTML input tag with the nonce token embedded.
 
@@ -61,9 +70,9 @@ echo (new Nonce)->htmlInput('/comment/remove.php');
 
 Here is an example:
 
-    <input type="hidden" name="_nonce_shield_token" id="_nonce_shield_token" value="$2y$11$pqkld10rrrd23kv3ou010u5nEvDHdx5IecuSuIN94nOYiMDydzvkq" />
+    <input type="hidden" name="_nonce_shield_token" id="_nonce_shield_token" value="6bee0c3437199bf2e5ca1de872a9cefd" />
 
-#### 2.3. `validateToken()`
+#### 4.3. `validateToken()`
 
 Validates the incoming nonce token -- if not valid will respond with a `405` status code (`Method Not Allowed`).
 
@@ -71,11 +80,11 @@ Validates the incoming nonce token -- if not valid will respond with a `405` sta
 (new Nonce)->validateToken();
 ```
 
-### 3. License
+### 5. License
 
 The GNU General Public License.
 
-### 4. Contributions
+### 6. Contributions
 
 Would you help make this library better? Contributions are welcome.
 
