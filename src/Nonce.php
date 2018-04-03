@@ -1,6 +1,7 @@
 <?php
 namespace NonceShield;
 
+use NonceShield\Exception\UnstartedSessionException;
 use NonceShield\Html;
 use NonceShield\HttpResponse;
 use NonceShield\Uri;
@@ -28,6 +29,10 @@ class Nonce
      */
     public function __construct()
     {
+        if (empty(session_id())) {
+            throw new UnstartedSessionException();
+        }
+
         $this->html = new Html;
     }
 
@@ -83,8 +88,9 @@ class Nonce
                 break;
 
             case $_SERVER['REQUEST_METHOD'] === 'GET':
-                $token = $this->getToken(Uri::withoutVar($_SERVER['REQUEST_URI'], self::NAME));
-                if ($token !== Uri::getVar($_SERVER['REQUEST_URI'], self::NAME)) {
+                $requestUri = urldecode($_SERVER['REQUEST_URI']);
+                $token = $this->getToken(Uri::withoutVar($requestUri, self::NAME));
+                if ($token !== Uri::getVar($requestUri, self::NAME)) {
                     HttpResponse::forbidden();
                 }
                 break;

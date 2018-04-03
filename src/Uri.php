@@ -11,7 +11,7 @@ namespace NonceShield;
 class Uri
 {
     /**
-     * Gets the value of the variable.
+     * Gets the value of the given variable in the uri.
      *
      * @param string $uri
      * @param string $name
@@ -32,7 +32,7 @@ class Uri
     }
 
     /**
-     * Gets the uri without the variable in the query string.
+     * Gets the uri without the given variable in the query string.
      *
      * @param string $uri
      * @param string $name
@@ -49,7 +49,8 @@ class Uri
                 $queryStringWithoutToken[$item[0]] = $item[1];
             }
         }
+        empty($queryStringWithoutToken) ? $baseUri = strtok($uri, '?') : $baseUri = strtok($uri, '?') . '?';
 
-        return strtok($uri, '?') . '?' . http_build_query($queryStringWithoutToken);
+        return $baseUri . http_build_query($queryStringWithoutToken);
     }
 }

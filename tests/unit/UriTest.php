@@ -49,4 +49,15 @@ class UriTest extends TestCase
 
         $this->assertEquals($uriWithoutToken, 'http://localhost:8001/foo.php?action=someaction');
     }
+
+    /**
+     * @test
+     */
+    public function without_var_example_03()
+    {
+        $requestUri = 'http://localhost:8001/validate-token.php?_nonce_shield_token=$2y$11$vcnb1ci9hm0gpb88gn48vuA2CKPTFwh8N5O4aH9mobJfsRt7us09y';
+        $uriWithoutToken = Uri::withoutVar($requestUri, '_nonce_shield_token');
+
+        $this->assertEquals($uriWithoutToken, 'http://localhost:8001/validate-token.php');
+    }
 }
