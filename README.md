@@ -63,7 +63,7 @@ echo (new Nonce)->htmlInput('/comment/remove.php');
 
 Here is an example:
 
-    <input type="hidden" name="_nonce_shield_token" id="_csrf_shield_token" value="$2y$11$pqkld10rrrd23kv3ou010u5nEvDHdx5IecuSuIN94nOYiMDydzvkq" />
+    <input type="hidden" name="_nonce_shield_token" id="_nonce_shield_token" value="$2y$11$pqkld10rrrd23kv3ou010u5nEvDHdx5IecuSuIN94nOYiMDydzvkq" />
 
 #### 2.3. `validateToken()`
 
