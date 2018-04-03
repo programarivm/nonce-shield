@@ -11,7 +11,7 @@ include 'HtmlScraper.php';
 
 class NonceTest extends TestCase
 {
-    const BASE_URI = 'http://localhost:8005/';
+    const BASE_URI = 'http://localhost:8001/';
 
     const TIME_DELAY = 1;
 
@@ -124,6 +124,20 @@ class NonceTest extends TestCase
         );
 
         $this->assertEquals(200, $this->response->getStatusCode());
+    }
+
+    /**
+     * @test
+     */
+    public function validate_token_GET_403()
+    {
+        $this->response = $this->http->request(
+            'GET',
+            'validate-token.php',
+            ['query' => ['_nonce_shield_token' => 'foo']]
+        );
+
+        $this->assertEquals(403, $this->response->getStatusCode());
     }
 
     /**
