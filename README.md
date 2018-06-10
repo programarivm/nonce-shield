@@ -23,13 +23,7 @@ Nonce Shield accepts all HTTP methods (`GET`, `POST`, `PUT`, `PATCH` and `DELETE
 
 > **Side Note**: If you are not a big fan of sending tokens in GET requests, have a look at [CSRF Shield](https://github.com/programarivm/csrf-shield) which is a OWASP-friendly CSRF protector that won't disclose tokens.
 
-### 1. Install
-
-Via composer:
-
-    $ composer require programarivm/nonce-shield
-
-### 2. Where Is the Token Appended?
+### 1. Where Is the Token Appended?
 
 According to the HTTP method being used:
 
@@ -42,7 +36,7 @@ According to the HTTP method being used:
 | DELETE        | `$_SERVER['HTTP_X_CSRF_TOKEN']` |
 
 
-### 3. Security
+### 2. Security
 
 Nonce Shield assumes there is an `.env` file in your app's root folder with a `NONCE_KEY` set -- otherwise it will throw an `UnsecureNonceKeyException`.
 
@@ -50,16 +44,16 @@ Nonce Shield assumes there is an `.env` file in your app's root folder with a `N
 
 The `NONCE_KEY` is used as a salt when hashing the url. This value is at least 32 characters long, and must contain at least one number, one lowercase letter, one uppercase letter and a non-alphanumeric character.
 
-### 4. `NonceShield\Nonce` Methods
+### 3. `NonceShield\Nonce` Methods
 
-#### 4.1. `getToken()`
+#### 3.1. `getToken()`
 
 Gets a nonce token.
 
 ```php
 $nonce = (new Nonce)->getToken('/comment/remove.php?id=3452');
 ```
-#### 4.2. `htmlInput()`
+#### 3.2. `htmlInput()`
 
 Returns an HTML input tag with the nonce token embedded.
 
@@ -71,7 +65,7 @@ Here is an example:
 
     <input type="hidden" name="_nonce_shield_token" id="_nonce_shield_token" value="6bee0c3437199bf2e5ca1de872a9cefd" />
 
-#### 4.3. `validateToken()`
+#### 3.3. `validateToken()`
 
 Validates the incoming nonce token -- if not valid will respond with a `405` status code (`Method Not Allowed`).
 
@@ -79,11 +73,11 @@ Validates the incoming nonce token -- if not valid will respond with a `405` sta
 (new Nonce)->validateToken();
 ```
 
-### 5. License
+### 4. License
 
 The GNU General Public License.
 
-### 6. Contributions
+### 5. Contributions
 
 Would you help make this library better? Contributions are welcome.
 
